@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Grasping Unity Project</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 40px auto;
+      max-width: 900px;
+      line-height: 1.6;
+    }
+    h1, h2, h3 {
+      color: #333;
+    }
+    video {
+      display: block;
+      margin: 20px 0;
+      border: 1px solid #ccc;
+    }
+    code {
+      background: #f0f0f0;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+    .download-link {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #007acc;
+      color: white;
+      display: inline-block;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Grasping Unity Project</h1>
+
+  <p>
+    This demo showcases our proposed method for object selection in out-of-reach VR interaction. 
+    The method integrates user gesture and pointing cues using probabilistic modeling, and compares against baseline techniques.
+  </p>
+
+  <h2>✨ Quick Comparison Demo</h2>
+  <p>These short clips show how the user performs the same task using different methods:</p>
+
+  <h3>🟢 Combo (C): Probabilistic integration of gesture + pointing cues</h3>
+  <video src="demo/combi.mp4" controls width="800"></video>
+
+  <h3>🔵 Pointing only (P)</h3>
+  <video src="demo/pointing_only.mp4" controls width="800"></video>
+
+  <h3>🟣 Gesture only (G)</h3>
+  <video src="demo/gesture_only.mp4" controls width="800"></video>
+
+  <p>
+    These clips zoom in on the Unity-rendered scene for clarity. The same object selection task is attempted across conditions. 
+    As you’ll see, the Combo method shows the most accurate and stable selection behavior.
+  </p>
+
+  <h2>🧪 Experimental Conditions</h2>
+  <ul>
+    <li><strong>C (our method)</strong>: Combo – probabilistic integration between users’ gesture cue and pointing cue</li>
+    <li><strong>P</strong>: Pointing cue only</li>
+    <li><strong>G</strong>: Gesture cue only</li>
+    <li><strong>O</strong>: Meta Quest’s original out‑of‑reach (pointing‑based)</li>
+  </ul>
+
+  <h2>📥 Download the Project</h2>
+  <p>
+    For developers or collaborators who want to try it themselves:
+    <a class="download-link" href="https://drive.google.com/file/d/1DFdYkKcyZ1ayQ8mNFOA1IWijOCJMfuA2/view?usp=drive_link" download>Download Grasping Unity Project (.zip)</a>
+  </p>
+
+  <h2>⚙️ How to Set Up & Run the Project</h2>
+
+  <h3>📋 Prerequisites</h3>
+  <p>Before you begin, ensure you have the following installed on your system:</p>
+  <ul>
+    <li><strong>Unity Editor</strong>: Version <code>2022.3.17f1</code></li>
+    <li><strong>Python</strong>: Version <code>3.9.21</code></li>
+  </ul>
+
+  <h3>📁 Project Structure</h3>
+  <ul>
+    <li><strong>DistanceGrasp</strong>:
+      <ul>
+        <li>Unity-based VR environment.</li>
+        <li>Open in <strong>Unity Editor</strong> to run simulations.</li>
+        <li>Contains scenes, prefabs, scripts, and assets.</li>
+        <li>Sends object pose and hand pose to Python via socket communication.</li>
+      </ul>
+    </li>
+    <li><strong>model</strong>:
+      <ul>
+        <li>Python scripts for inference.</li>
+        <li>Predicts graspability score and relative position.</li>
+        <li>Sends predictions back to Unity via socket or API.</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>🚀 How to Run</h3>
+  <ol>
+    <li><strong>Set up the Python environment:</strong>
+      <pre><code>conda env create -f env.yml
+conda activate grasping_test</code></pre>
+    </li>
+
+    <li><strong>Start the Python server:</strong>
+      <pre><code>python app.py</code></pre>
+    </li>
+
+    <li><strong>Open the Unity project:</strong>
+      <video src="demo/setup_unity.mp4" controls width="800"></video>
+      <p>
+        In Unity Hub, open the <code>DistanceGrasp</code> folder. Then go to <code>Assets/Scenes/Simple_Test_2</code>.
+        Before pressing <strong>Play</strong>, adjust the following:
+      </p>
+      <ul>
+        <li><strong>TrackData → Prefab Folder Name</strong>: Choose e.g., <code>Prefab_Test</code> (trained objects)</li>
+        <li><strong>SimpleTestManager → Time Limit</strong>: Positive number in seconds</li>
+        <li><strong>SimpleTestManager → Session Types</strong>: Combinations like <code>PC, GCOP</code></li>
+      </ul>
+      <p>Use the <strong>pinch gesture</strong> in VR to confirm object selection.</p>
+    </li>
+  </ol>
+
+  <h3>⚠️ Important Note</h3>
+  <p>
+    Before pressing <strong>Play</strong> in Unity, always make sure to <strong>restart <code>app.py</code></strong> in the <code>model</code> folder.
+    This ensures the backend is properly initialized to handle experiment data.
+  </p>
+</body>
+</html>
